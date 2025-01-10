@@ -275,7 +275,7 @@ impl Wgl {
         let arb_create_context_profile = wgl_ext_supported("WGL_ARB_create_context_profile");
         let ext_swap_control = wgl_ext_supported("WGL_EXT_swap_control");
         let arb_pixel_format = wgl_ext_supported("WGL_ARB_pixel_format");
-        assert!(arb_pixel_format, "WGL_ARB_pixel_format is required");
+        //assert!(arb_pixel_format, "WGL_ARB_pixel_format is required");
 
         (display.libopengl32.wglDeleteContext)(rc);
 
