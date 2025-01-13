@@ -296,6 +296,7 @@ impl Wgl {
 
     unsafe fn wgl_attrib(&self, display: &mut Display, pixel_format: i32, attrib: i32) -> i32 {
         let mut value = 0;
+        println!("GetPixelFormatAttribivARB: {:?}", self.GetPixelFormatAttribivARB.unwrap());
         if !(self.GetPixelFormatAttribivARB.unwrap())(
             display.dc,
             pixel_format,
