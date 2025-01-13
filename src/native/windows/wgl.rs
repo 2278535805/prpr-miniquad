@@ -353,7 +353,7 @@ impl Wgl {
             u.handle = n as _;
             usable_count += 1;
         }
-        assert!(usable_count > 0);
+        //assert!(usable_count > 0);
 
         let mut desired = GlFbconfig::default();
         desired.red_bits = 8;
