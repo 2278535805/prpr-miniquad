@@ -296,19 +296,25 @@ impl Wgl {
 
     unsafe fn wgl_attrib(&self, display: &mut Display, pixel_format: i32, attrib: i32) -> i32 {
         let mut value = 0;
-        println!("GetPixelFormatAttribivARB: {:?}", self.GetPixelFormatAttribivARB.unwrap());
-        if !(self.GetPixelFormatAttribivARB.unwrap())(
-            display.dc,
-            pixel_format,
-            0,
-            1,
-            &attrib,
-            &mut value as *mut _,
-        ) {
-            panic!("WGL: Failed to retrieve pixel format attribute");
+        if let Some(get_pixel_format_attrib_iv_arb) = self.GetPixelFormatAttribivARB {
+            if !get_pixel_format_attrib_iv_arb(
+                display.dc,
+                pixel_format,
+                0,
+                1,
+                &attrib,
+                &mut value as *mut _,
+            ) {
+                println!("WGL: Failed to retrieve pixel format attribute");
+                return 1;
+            }
+            return value;
+        } else {
+            println!("WGL: GetPixelFormatAttribivARB is not available");
+            return 1;
         }
-        return value;
     }
+    
 
     unsafe fn wgl_find_pixel_format(&self, display: &mut Display, sample_count: i32) -> u32 {
         let native_count = self.wgl_attrib(display, 1, WGL_NUMBER_PIXEL_FORMATS_ARB as _);
